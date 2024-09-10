@@ -1,0 +1,8 @@
+*.elf
+*.gba
+*.o
+*.sav
+*.bc
+.swiftpm
+.build
+.vscode
