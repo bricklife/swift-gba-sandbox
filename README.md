@@ -1,6 +1,6 @@
 # swift-gba-sandbox
 
-Game Boy Advance rom projects written in Embedded Swift.
+Game Boy Advance ROM projects written in Embedded Swift.
 
 ## Building the Projects
 
