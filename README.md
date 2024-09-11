@@ -8,7 +8,7 @@ Game Boy Advance ROM projects written in Embedded Swift.
 2. Download `gba-llvm-devkit` from the [releases page](https://github.com/stuij/gba-llvm-devkit/releases).
 3. Set `GBA_LLVM` in your environment to the path to the downloaded devkit (`export GBA_LLVM=<path to>/gba-llvm-devkit-1-Darwin-arm64`).
 4. `cd` into one of the projects and run `make`.
-5. Open the compiled `.gba` rom in a Game Boy emulator, e.g. [https://mgba.io](mGBA).
+5. Open the compiled `.gba` rom in a Game Boy emulator, e.g. [mGBA](https://mgba.io).
 
 ## Resources
 This repository is based on information from the following URLs:
