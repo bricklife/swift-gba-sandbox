@@ -16,7 +16,7 @@ struct Key: OptionSet {
     
     static func poll() -> Self {
         let REG_KEYINPUT = UnsafePointer<UInt16>(bitPattern: 0x04000130)!
-        return Self(rawValue: ~REG_KEYINPUT.pointee)
+        return Self(rawValue: ~REG_KEYINPUT.pointee & 0x03ff)
     }
     
     var isPressingAnyKey: Bool {
