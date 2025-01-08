@@ -17,7 +17,7 @@ struct GameMain {
     static var sprites: [ObjectAttribute] = []
     
     static func showTitle(_ index: Int) {
-        let spriteIndex = 3 - index
+        let spriteIndex = index
         sprites[spriteIndex].x = UInt16(bitPattern: Int16(index * 60 - 32 - 2))
         sprites[spriteIndex].y = 0
         sprites[spriteIndex].charNo = 512 + UInt16(index * 8)
@@ -46,6 +46,7 @@ struct GameMain {
         }
         
         sprites[spriteIndex].attr1 |= 0x0200 // Rotation/Scaling Parameter Selection: 1
+        sprites[spriteIndex].attr2 |= 0x0400 // Piority: 1
     }
     
     static func showSubtitle() {
@@ -80,6 +81,9 @@ struct GameMain {
         let OBJ_ENABLE = UInt16(1 << 12)
         let BG2_ENABLE = UInt16(1 << 10)
         setMode(3, flags: OBJ_ENABLE | BG2_ENABLE)
+        
+        let REG_BG2CNT = UnsafeMutablePointer<UInt16>(bitPattern: 0x0400000C)!
+        REG_BG2CNT.pointee = 0x0001 // Piority: 1
         
         while true {
             sprites = .init(repeating: .init(x: 240, y: 160, charNo: 0, paletteNo: 0), count: 8)
