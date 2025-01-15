@@ -33,6 +33,10 @@ enum Color: Int, CaseIterable {
 }
 
 extension ObjectAttribute {
+    init(x: UInt16, y: UInt16, color: Color) {
+        self.init(x: x, y: y, charNo: 0, paletteNo: UInt16(color.rawValue))
+    }
+    
     var color: Color {
         set { paletteNo = UInt16(newValue.rawValue) }
         get { Color(rawValue: Int(paletteNo))! }
@@ -55,11 +59,6 @@ struct GameMain {
         setMode(0, flags: OBJ_ENABLE)
     }
     
-    
-    static func makeSprite(x: UInt16, y: UInt16, color: Color) -> ObjectAttribute {
-        return ObjectAttribute(x: x, y: y, charNo: 0, paletteNo: UInt16(color.rawValue))
-    }
-    
     static func main() {
         setup()
         
@@ -68,7 +67,7 @@ struct GameMain {
         let oam = UnsafeMutablePointer<ObjectAttribute>(bitPattern: 0x07000000)!
         oam.update(repeating:  ObjectAttribute(attr0: 0x0200), count: 128)
         
-        var sprite = makeSprite(x: (240 / 2) - 8, y: (160 / 2) - 8, color: .white)
+        var sprite = ObjectAttribute(x: (240 / 2) - 8, y: (160 / 2) - 8, color: .white)
         if sram[0] != 0xff {
             sprite.x = UInt16(sram[0])
             sprite.y = UInt16(sram[1])
@@ -82,7 +81,7 @@ struct GameMain {
             let x = UInt16(sram[spriteIndex * 2])
             let y = UInt16(sram[spriteIndex * 2 + 1])
             
-            oam[spriteIndex] = makeSprite(x: x, y: y, color: .yellow)
+            oam[spriteIndex] = ObjectAttribute(x: x, y: y, color: .yellow)
             spriteIndex += 1
         }
         
@@ -102,7 +101,7 @@ struct GameMain {
                 if !isPressingA {
                     isPressingA = true
                     if spriteIndex < 128 {
-                        oam[spriteIndex] = makeSprite(x: sprite.x, y: sprite.y, color: .yellow)
+                        oam[spriteIndex] = ObjectAttribute(x: sprite.x, y: sprite.y, color: .yellow)
                         sram[spriteIndex * 2] = UInt8(sprite.x)
                         sram[spriteIndex * 2 + 1] = UInt8(sprite.y)
                         
