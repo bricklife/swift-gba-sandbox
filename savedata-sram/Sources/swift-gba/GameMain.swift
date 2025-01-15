@@ -62,24 +62,22 @@ struct GameMain {
     static func main() {
         setup()
         
-        let sram = UnsafeMutablePointer<UInt8>(bitPattern: 0x0E000000)!
-        
         let oam = UnsafeMutablePointer<ObjectAttribute>(bitPattern: 0x07000000)!
         oam.update(repeating:  ObjectAttribute(attr0: 0x0200), count: 128)
         
         var sprite = ObjectAttribute(x: (240 / 2) - 8, y: (160 / 2) - 8, color: .white)
-        if sram[0] != 0xff {
-            sprite.x = UInt16(sram[0])
-            sprite.y = UInt16(sram[1])
+        if SRAM.read(offset: 0) != 0xff {
+            sprite.x = UInt16(SRAM.read(offset: 0))
+            sprite.y = UInt16(SRAM.read(offset: 1))
         }
         
         var spriteIndex = 1
         while true {
             waitForVsync()
-            guard spriteIndex < 128, sram[spriteIndex * 2] != 0xff else { break }
+            guard spriteIndex < 128, SRAM.read(offset: spriteIndex * 2) != 0xff else { break }
             
-            let x = UInt16(sram[spriteIndex * 2])
-            let y = UInt16(sram[spriteIndex * 2 + 1])
+            let x = UInt16(SRAM.read(offset: spriteIndex * 2))
+            let y = UInt16(SRAM.read(offset: spriteIndex * 2 + 1))
             
             oam[spriteIndex] = ObjectAttribute(x: x, y: y, color: .yellow)
             spriteIndex += 1
@@ -102,8 +100,8 @@ struct GameMain {
                     isPressingA = true
                     if spriteIndex < 128 {
                         oam[spriteIndex] = ObjectAttribute(x: sprite.x, y: sprite.y, color: .yellow)
-                        sram[spriteIndex * 2] = UInt8(sprite.x)
-                        sram[spriteIndex * 2 + 1] = UInt8(sprite.y)
+                        SRAM.write(UInt8(sprite.x), offset: spriteIndex * 2)
+                        SRAM.write(UInt8(sprite.y), offset: spriteIndex * 2 + 1)
                         
                         spriteIndex += 1
                     }
@@ -114,8 +112,8 @@ struct GameMain {
             }
             
             oam[0] = sprite
-            sram[0] = UInt8(sprite.x)
-            sram[1] = UInt8(sprite.y)
+            SRAM.write(UInt8(sprite.x), offset: 0)
+            SRAM.write(UInt8(sprite.y), offset: 1)
         }
     }
 }
