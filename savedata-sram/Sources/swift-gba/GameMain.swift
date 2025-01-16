@@ -63,7 +63,7 @@ struct GameMain {
         setup()
         
         let oam = UnsafeMutablePointer<ObjectAttribute>(bitPattern: 0x07000000)!
-        oam.update(repeating:  ObjectAttribute(attr0: 0x0200), count: 128)
+        oam.update(repeating: ObjectAttribute(attr0: 0x0200), count: 128)
         
         var sprite = ObjectAttribute(x: (240 / 2) - 8, y: (160 / 2) - 8, color: .white)
         if SRAM.read(offset: 0) != 0xff {
@@ -109,6 +109,11 @@ struct GameMain {
             } else {
                 sprite.color = .white
                 isPressingA = false
+            }
+            if key.contains(.select) {
+                oam.advanced(by: 1).update(repeating: ObjectAttribute(attr0: 0x0200), count: 127)
+                spriteIndex = 1
+                SRAM.clear()
             }
             
             oam[0] = sprite

@@ -10,4 +10,8 @@ enum SRAM {
         precondition(index >= 0 && index < 0x8000)
         return sram[index]
     }
+    
+    static func clear() {
+        sram.update(repeating: 0xff, count: 0x8000)
+    }
 }
