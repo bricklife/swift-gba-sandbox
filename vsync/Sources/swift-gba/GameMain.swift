@@ -3,14 +3,20 @@ func setMode(_ mode: UInt16, flags: UInt16 = 0) {
     REG_DISPCNT.pointee = (mode & 0x0007) | (flags & 0xfff8)
 }
 
+@inline(never)
+func vcount() -> UInt16 {
+    let REG_VCOUNT = UnsafePointer<UInt16>(bitPattern: 0x04000006)!
+    return REG_VCOUNT.pointee
+}
+
 func waitForVsync() {
     /* Doesn't work...
      let REG_VCOUNT = UnsafePointer<UInt16>(bitPattern: 0x04000006)!
      while REG_VCOUNT.pointee >= 160 {}
      while REG_VCOUNT.pointee < 160 {}
      */
-    while UnsafePointer<UInt16>(bitPattern: 0x04000006)!.pointee >= 160 {}
-    while UnsafePointer<UInt16>(bitPattern: 0x04000006)!.pointee < 160 {}
+    while vcount() >= 160 {}
+    while vcount() < 160 {}
 }
 
 @main
