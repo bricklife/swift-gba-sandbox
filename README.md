@@ -17,4 +17,5 @@ This repository is based on information from the following URLs:
 - https://github.com/k-kohey/swift-gba-samples/
 - https://github.com/finnvoor/swift-gameboy-examples/
 - https://akkera102.sakura.ne.jp/gbadev/
+- https://github.com/akatsuki105/gba-docs-ja/
 - https://gbadev.net/tonc/
