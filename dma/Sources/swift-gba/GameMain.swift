@@ -36,7 +36,7 @@ func irqHandler() {
         } else {
             REG_DMA3SAD.store(src1Address)
         }
-        REG_DMA3CNT_H.store(DMA_ENABLE | DMA_IRQ)
+        REG_DMA3CNT_H.store(DMA_ENABLE | DMA_IRQ | DMA_VBLANK)
     }
     if flag & IRQ_DMA3 != 0 {
         mGBA.log("IRQ_DMA3 done")
