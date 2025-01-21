@@ -73,13 +73,11 @@ struct GameMain {
     static func main() {
         initIrq()
         
-        src1.initialize(repeating: 0x7FFF)
-        for i in stride(from: 0, to: src1.count, by: 11) {
-            src1[i] = 0x001F
-        }
-        src2.initialize(repeating: 0x7FFF)
-        for i in stride(from: 0, to: src2.count, by: 13) {
-            src2[i] = 0x7C00
+        for y in 0..<160 {
+            for x in 0..<240 {
+                src1[y * 240 + x] = UInt16(0x001F - (y / 5))
+                src2[y * 240 + x] = UInt16((x * y / 2) & 0x7C00)
+             }
         }
         
         let BG2_ENABLE = UInt16(1 << 10)
