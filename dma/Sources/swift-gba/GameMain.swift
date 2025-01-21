@@ -75,8 +75,8 @@ struct GameMain {
         
         for y in 0..<160 {
             for x in 0..<240 {
-                src1[y * 240 + x] = UInt16(0x001F - (y / 5))
-                src2[y * 240 + x] = UInt16((x * y / 2) & 0x7C00)
+                src1[y * 240 + x] = UInt16(0x03FF - (y / 5))
+                src2[y * 240 + x] = UInt16((y / 5) + 0x7C00)
              }
         }
         
