@@ -13,11 +13,13 @@ let REG_DISPSTAT = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000004)
 let LCDC_VBL = UInt16(1 << 3)
 let LCDC_HBL = UInt16(1 << 4)
 
+// https://github.com/devkitPro/libgba/blob/master/include/gba_input.h
 let REG_KEYINPUT = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000130)
 let REG_KEYCNT   = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000132)
 let KEY_A = UInt16(1 << 0)
 let KEYIRQ_ENABLE = UInt16(1 << 14)
 
+// See also:
 // https://github.com/akatsuki105/gba-docs-ja/blob/main/interrupt.md
 // https://akkera102.sakura.ne.jp/gbadev/?tutorial.13
 
@@ -29,17 +31,17 @@ func irqHandler() {
     REG_IME.store(0)
     
     let flag = REG_IF.load()
-    if flag & IRQ_VBLANK > 0 {
+    if flag & IRQ_VBLANK != 0 {
         isStarted = true
         UnsafeMutablePointer<UInt16>(bitPattern: 0x06000000)![count] = color
         count = (count + 1) % (240 * 160)
     }
-    if flag & IRQ_HBLANK > 0 {
+    if flag & IRQ_HBLANK != 0 {
         if isStarted {
             color = (color + 1) & 0x7FFF
         }
     }
-    if flag & IRQ_KEYPAD > 0 {
+    if flag & IRQ_KEYPAD != 0 {
         count = (count + 240) % (240 * 160)
     }
     REG_IF.store(flag)
