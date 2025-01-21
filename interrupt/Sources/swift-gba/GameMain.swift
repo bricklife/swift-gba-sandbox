@@ -19,10 +19,6 @@ let REG_KEYCNT   = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000132)
 let KEY_A = UInt16(1 << 0)
 let KEYIRQ_ENABLE = UInt16(1 << 14)
 
-// See also:
-// https://github.com/akatsuki105/gba-docs-ja/blob/main/interrupt.md
-// https://akkera102.sakura.ne.jp/gbadev/?tutorial.13
-
 var isStarted = false
 var count = 0
 var color = UInt16(0)
