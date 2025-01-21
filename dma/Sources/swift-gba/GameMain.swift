@@ -1,7 +1,3 @@
-//
-// 
-//
-
 // https://github.com/devkitPro/libgba/blob/master/include/gba_interrupt.h
 let INT_VECTOR   = VolatileMappedRegister<UInt32>(unsafeBitPattern: 0x03007FFC)
 let REG_DISPCNT  = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000000)
