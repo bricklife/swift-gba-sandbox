@@ -27,6 +27,7 @@ var isStarted = false
 var count = 0
 var color = UInt16(0)
 
+@_section(".iwram")
 func irqHandler() {
     REG_IME.store(0)
     

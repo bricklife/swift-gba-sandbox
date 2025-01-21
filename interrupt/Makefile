@@ -8,7 +8,7 @@ NAME := $(shell basename $(CURDIR))
 BIN = $(GBA_LLVM)/bin
 SWIFTC = $(TOOLCHAIN)/usr/bin/swiftc
 
-SWIFT_FLAGS = -wmo -enable-experimental-feature Embedded -enable-experimental-feature Volatile -target armv4t-none-none-eabi -parse-as-library -Xfrontend -internalize-at-link -lto=llvm-thin -Xfrontend -disable-stack-protector -Xfrontend -disable-objc-interop
+SWIFT_FLAGS = -wmo -enable-experimental-feature Embedded -enable-experimental-feature Volatile -enable-experimental-feature SymbolLinkageMarkers -target armv4t-none-none-eabi -parse-as-library -Xfrontend -internalize-at-link -lto=llvm-thin -Xfrontend -disable-stack-protector -Xfrontend -disable-objc-interop
 CFLAGS = -marm -mfpu=none -fno-exceptions -fno-rtti -D_LIBCPP_AVAILABILITY_HAS_NO_VERBOSE_ABORT -fshort-enums
 SYSROOT = $(GBA_LLVM)/lib/clang-runtimes/arm-none-eabi/armv4t
 LFLAGS = -lcrt0-gba -Map map.txt

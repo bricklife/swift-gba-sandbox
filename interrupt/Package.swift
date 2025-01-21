@@ -19,6 +19,7 @@ let package = Package(
             swiftSettings: [
                 .enableExperimentalFeature("Embedded"),
                 .enableExperimentalFeature("Volatile"),
+                .enableExperimentalFeature("SymbolLinkageMarkers"),
             ]
         )
     ]
