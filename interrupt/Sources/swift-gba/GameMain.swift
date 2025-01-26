@@ -1,15 +1,8 @@
-// https://github.com/devkitPro/libgba/blob/master/include/gba_interrupt.h
-let INT_VECTOR   = VolatileMappedRegister<UInt32>(unsafeBitPattern: 0x03007FFC)
-let REG_DISPCNT  = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000000)
-let REG_IME      = VolatileMappedRegister<UInt32>(unsafeBitPattern: 0x04000208)
-let REG_IE       = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000200)
-let REG_IF       = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000202)
-let IRQ_VBLANK = UInt16(1 << 0)
-let IRQ_HBLANK = UInt16(1 << 1)
-let IRQ_KEYPAD = UInt16(1 << 12)
-
 // https://github.com/devkitPro/libgba/blob/master/include/gba_video.h
+let REG_DISPCNT  = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000000)
 let REG_DISPSTAT = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000004)
+let MODE_3 = UInt16(3)
+let BG2_ENABLE = UInt16(1 << 10)
 let LCDC_VBL = UInt16(1 << 3)
 let LCDC_HBL = UInt16(1 << 4)
 
@@ -18,6 +11,15 @@ let REG_KEYINPUT = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000130)
 let REG_KEYCNT   = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000132)
 let KEY_A = UInt16(1 << 0)
 let KEYIRQ_ENABLE = UInt16(1 << 14)
+
+// https://github.com/devkitPro/libgba/blob/master/include/gba_interrupt.h
+let INT_VECTOR   = VolatileMappedRegister<UInt32>(unsafeBitPattern: 0x03007FFC)
+let REG_IME      = VolatileMappedRegister<UInt32>(unsafeBitPattern: 0x04000208)
+let REG_IE       = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000200)
+let REG_IF       = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000202)
+let IRQ_VBLANK = UInt16(1 << 0)
+let IRQ_HBLANK = UInt16(1 << 1)
+let IRQ_KEYPAD = UInt16(1 << 12)
 
 var isStarted = false
 var count = 0
@@ -60,17 +62,12 @@ func initIrq() {
     REG_IME.store(1)
 }
 
-func setMode(_ mode: UInt16, flags: UInt16 = 0) {
-    REG_DISPCNT.store((mode & 0x0007) | (flags & 0xfff8))
-}
-
 @main
 struct GameMain {
     static func main() {
         initIrq()
         
-        let BG2_ENABLE = UInt16(1 << 10)
-        setMode(3, flags: BG2_ENABLE)
+        REG_DISPCNT.store(MODE_3 | BG2_ENABLE)
         
         while true {}
     }
