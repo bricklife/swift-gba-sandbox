@@ -15,8 +15,8 @@ let cpuClock = 16 * 1024 * 1024
 let audioRate = 16384
 let audioFreq = cpuClock / audioRate
 
-var currentSound: (address: UInt32, length: Int) = (0, 0)
-var countdown = 0
+var playingSound: (address: UInt32, length: Int) = (0, 0)
+var remainingLength = 0
 
 func initIrq() {
     REG_IME.store(0)
@@ -34,9 +34,9 @@ func irqHandler() {
     
     let flag = REG_IF.load()
     if flag & IRQ_DMA1 != 0 {
-        countdown -= 16
-        if countdown <= 0 {
-            startSound(address: currentSound.address, length: currentSound.length)
+        remainingLength -= 16
+        if remainingLength <= 0 {
+            startSound(address: playingSound.address, length: playingSound.length)
         }
     }
     REG_IF.store(flag)
@@ -54,8 +54,8 @@ func initSound() {
 
 @_section(".iwram")
 func startSound(address: UInt32, length: Int) {
-    currentSound = (address: address, length: length)
-    countdown = length
+    playingSound = (address: address, length: length)
+    remainingLength = length
     
     REG_DMA1CNT_H.store(0)
     REG_TM0CNT_H.store(0)
@@ -71,7 +71,9 @@ func startSound(address: UInt32, length: Int) {
 func stopSound() {
     REG_DMA1CNT_H.store(0)
     REG_TM0CNT_H.store(0)
-    countdown = 0
+    
+    playingSound = (0, 0)
+    remainingLength = 0
 }
 
 @main
