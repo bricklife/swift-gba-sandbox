@@ -1,12 +1,10 @@
 ifeq ($(strip $(GBA_LLVM)),)
 $(error "Please set GBA_LLVM in your environment. export GBA_LLVM=<path to>/gba-llvm-devkit-1-Darwin-arm64")
 endif
-TOOLCHAIN ?= /Library/Developer/Toolchains/swift-latest.xctoolchain
 
 NAME := $(shell basename $(CURDIR))
 
 BIN = $(GBA_LLVM)/bin
-SWIFTC = $(TOOLCHAIN)/usr/bin/swiftc
 
 SWIFT_FLAGS = -O -wmo -enable-experimental-feature Embedded -enable-experimental-feature Volatile -enable-experimental-feature SymbolLinkageMarkers -target armv4t-none-none-eabi -parse-as-library -Xfrontend -internalize-at-link -lto=llvm-thin -Xfrontend -disable-stack-protector -Xfrontend -disable-objc-interop
 CFLAGS = -marm -mfpu=none -fno-exceptions -fno-rtti -D_LIBCPP_AVAILABILITY_HAS_NO_VERBOSE_ABORT -fshort-enums
@@ -24,7 +22,7 @@ $(NAME).gba: $(NAME).elf
 	$(BIN)/gbafix $@
 
 $(NAME).elf: $(SWIFT_FILES)
-	$(SWIFTC) -o $@ $(SWIFT_FILES) \
+	swiftc -o $@ $(SWIFT_FILES) \
 		$(SWIFT_FLAGS) $(addprefix -Xcc , $(CFLAGS)) \
 		$(addprefix -Xlinker , $(LFLAGS)) \
 		$(addprefix -Xclang-linker , $(CLANG_LINKER_FLAGS))
