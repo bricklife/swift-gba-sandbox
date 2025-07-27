@@ -1,8 +1,11 @@
 // https://github.com/devkitPro/libgba/blob/master/include/gba_input.h
-let REG_KEYINPUT = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000130)
+let REG_KEYINPUT    = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000130)
 
 // https://github.com/devkitPro/libgba/blob/master/include/gba_sio.h
-let RCNT = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000134)
+let RCNT            = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000134)
+let R_GPIO          = UInt16(0x8000)
+let GPIO_SO_OUTPUT  = UInt16(0x0080)
+let GPIO_SO         = UInt16(0x0008)
 
 @main
 struct GameMain {
@@ -10,9 +13,11 @@ struct GameMain {
         while true {
             let key = REG_KEYINPUT.load() & 0x03ff
             if key == 0x03ff {
-                RCNT.store(0b1000_0000_1000_0000) // SO: Output & Low
+                // GPIO: SO = Output & Low
+                RCNT.store(R_GPIO & GPIO_SO_OUTPUT)
             } else {
-                RCNT.store(0b1000_0000_1000_1000) // SO: Output & High
+                // GPIO: SO = Output & High
+                RCNT.store(R_GPIO & GPIO_SO_OUTPUT & GPIO_SO)
             }
         }
     }
