@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "gba-sprite",
+    name: "newyear2026",
     products: [
         .executable(
             name: "Game",
