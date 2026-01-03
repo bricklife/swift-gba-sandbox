@@ -124,7 +124,7 @@ struct GameMain {
         let n = 240 * 160 / 2
         bg0Tile.update(repeating: 0x0000, count: n)
         for _ in 0..<50 {
-            bg0Tile[.random(in: 0..<n)] = 0x000C
+            bg0Tile[.random(in: 0..<n)] = .random(in: 0x0001...0x000F)
         }
         
         let bg0Map = UnsafeMutablePointer<UInt16>(bitPattern: 0x6000000 + (0x800 * 28))!
