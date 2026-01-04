@@ -48,7 +48,7 @@ func irqHandler() {
         switch vcount {
         case 0..<159:
             applyEffect(for: UInt8(vcount) + 1)
-        case 227:
+        case 160:
             camera.position.z += (1 << 6)
             applyEffect(for: 0)
         default:
