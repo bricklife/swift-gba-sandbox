@@ -3,8 +3,6 @@
   "swiftCompiler": {
     "extraCLIOptions": [
       "-enable-experimental-feature", "Embedded",
-      "-enable-experimental-feature", "Volatile",
-      "-enable-experimental-feature", "SymbolLinkageMarkers",
       "-Xfrontend", "-internalize-at-link",
       "-Xfrontend", "-disable-stack-protector",
       "-Xfrontend", "-disable-objc-interop",
