@@ -1,4 +1,6 @@
 // https://github.com/devkitPro/libgba/blob/master/include/gba_input.h
+import _Volatile
+
 let REG_KEYINPUT    = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000130)
 
 // https://github.com/devkitPro/libgba/blob/master/include/gba_sio.h

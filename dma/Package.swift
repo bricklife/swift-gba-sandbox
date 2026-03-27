@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.3
 
 import PackageDescription
 
@@ -19,7 +19,6 @@ let package = Package(
             swiftSettings: [
                 .enableExperimentalFeature("Embedded"),
                 .enableExperimentalFeature("Volatile"),
-                .enableExperimentalFeature("SymbolLinkageMarkers"),
             ]
         )
     ]

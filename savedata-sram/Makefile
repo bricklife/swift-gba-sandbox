@@ -6,11 +6,11 @@ NAME := $(shell basename $(CURDIR))
 
 BIN = $(GBA_LLVM)/bin
 
-SWIFT_FLAGS = -wmo -enable-experimental-feature Embedded -target armv4t-none-none-eabi -parse-as-library -Xfrontend -internalize-at-link -lto=llvm-thin -Xfrontend -disable-stack-protector -Xfrontend -disable-objc-interop
+SWIFT_FLAGS = -O -wmo -enable-experimental-feature Embedded -target armv4t-none-none-eabi -parse-as-library -lto=llvm-thin -Xfrontend -internalize-at-link -Xfrontend -disable-stack-protector -Xfrontend -disable-objc-interop
 CFLAGS = -mthumb -mfpu=none -fno-exceptions -fno-rtti -D_LIBCPP_AVAILABILITY_HAS_NO_VERBOSE_ABORT -fshort-enums
 SYSROOT = $(GBA_LLVM)/lib/clang-runtimes/arm-none-eabi/armv4t
 LFLAGS = -lcrt0-gba
-CLANG_LINKER_FLAGS = -T gba_cart.ld --sysroot $(SYSROOT) -fuse-ld=lld
+CLANG_LINKER_FLAGS = -T gba_cart.ld --sysroot $(SYSROOT) -nostartfiles -fuse-ld=lld
 
 SRC_DIRS = $(shell find Sources -type d)
 SWIFT_FILES = $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/*.swift))

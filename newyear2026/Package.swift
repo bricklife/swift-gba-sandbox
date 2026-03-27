@@ -1,4 +1,4 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.3
 
 import PackageDescription
 
@@ -17,8 +17,8 @@ let package = Package(
                 "Support",
             ],
             swiftSettings: [
+                .enableExperimentalFeature("Embedded"),
                 .enableExperimentalFeature("Volatile"),
-                .enableExperimentalFeature("SymbolLinkageMarkers"),
             ]
         ),
         .target(name: "Support"),

@@ -38,7 +38,7 @@ extension Camera {
 
 nonisolated(unsafe) var camera = Camera.initial
 
-@_section(".iwram")
+@section(".iwram")
 func irqHandler() {
     REG_IME.store(0)
     
@@ -63,7 +63,7 @@ func irqHandler() {
     REG_IME.store(1)
 }
 
-@_section(".iwram")
+@section(".iwram")
 func applyEffect(for y: UInt8) {
     let d = Int32(bitPattern: Math.div(y))
     let lam = (camera.position.y &* d) >> 12

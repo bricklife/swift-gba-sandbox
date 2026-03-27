@@ -1,3 +1,7 @@
+import _Volatile
+
+let REG_KEYINPUT = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000130)
+
 struct Key: OptionSet {
     let rawValue: UInt16
     
@@ -15,8 +19,7 @@ struct Key: OptionSet {
     static let all      = Self(rawValue: 0x03ff)
     
     static func poll() -> Self {
-        let REG_KEYINPUT = UnsafePointer<UInt16>(bitPattern: 0x04000130)!
-        return Self(rawValue: ~REG_KEYINPUT.pointee & 0x03ff)
+        return Self(rawValue: ~REG_KEYINPUT.load() & 0x03ff)
     }
     
     var isPressingAnyKey: Bool {

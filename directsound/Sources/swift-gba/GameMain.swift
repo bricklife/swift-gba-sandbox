@@ -28,7 +28,7 @@ func initIrq() {
     REG_IME.store(1)
 }
 
-@_section(".iwram")
+@section(".iwram")
 func irqHandler() {
     REG_IME.store(0)
     
@@ -52,7 +52,7 @@ func initSound() {
     REG_TM0CNT_L.store(UInt16(truncatingIfNeeded: 0x10000 - audioFreq))
 }
 
-@_section(".iwram")
+@section(".iwram")
 func startSound(address: UInt32, length: Int) {
     playingSound = (address: address, length: length)
     remainingLength = length
@@ -67,7 +67,7 @@ func startSound(address: UInt32, length: Int) {
     REG_TM0CNT_H.store(TIMER_START)
 }
 
-@_section(".iwram")
+@section(".iwram")
 func stopSound() {
     REG_DMA1CNT_H.store(0)
     REG_TM0CNT_H.store(0)

@@ -10,6 +10,14 @@ func atomicLoad4(
     ptr.pointee
 }
 
+@_cdecl("__atomic_load_2")
+func atomicLoad2(
+    _ ptr: UnsafePointer<UInt16>,
+    _ ordering: UInt16
+) -> UInt16 {
+    ptr.pointee
+}
+
 @_cdecl("__atomic_store_4")
 func atomicStore4(
     _ ptr: UnsafeMutablePointer<UInt32>,

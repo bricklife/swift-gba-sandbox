@@ -15,6 +15,7 @@ ARCH             := armv4t
 TARGET           := $(ARCH)-none-none-eabi
 SYSROOT          := $(GBA_LLVM)/lib/clang-runtimes/arm-none-eabi/armv4t
 SWIFT_BUILD_ARGS := \
+    --build-system native \
 	--configuration release \
 	--triple $(TARGET) \
 	--toolset $(TOOLSET) \

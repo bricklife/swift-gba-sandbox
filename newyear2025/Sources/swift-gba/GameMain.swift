@@ -1,17 +1,17 @@
-func setMode(_ mode: UInt16, flags: UInt16 = 0) {
-    let REG_DISPCNT = UnsafeMutablePointer<UInt16>(bitPattern: 0x04000000)!
-    REG_DISPCNT.pointee = (mode & 0x0007) | (flags & 0xfff8)
-}
+import _Volatile
 
-@inline(never)
-func vcount() -> UInt16 {
-    let REG_VCOUNT = UnsafePointer<UInt16>(bitPattern: 0x04000006)!
-    return REG_VCOUNT.pointee
+let REG_DISPCNT  = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000000)
+let REG_VCOUNT   = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000006)
+let REG_BG2CNT   = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x0400000C)
+let REG_MOSAIC   = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x0400004C)
+
+func setMode(_ mode: UInt16, flags: UInt16 = 0) {
+    REG_DISPCNT.store((mode & 0x0007) | (flags & 0xfff8))
 }
 
 func waitForVsync() {
-    while vcount() >= 160 {}
-    while vcount() < 160 {}
+    while REG_VCOUNT.load() >= 160 {}
+    while REG_VCOUNT.load() < 160 {}
 }
 
 @main
@@ -68,8 +68,7 @@ struct GameMain {
         oam.update(from: sprites, count: sprites.count)
         
         for i in (0..<16).reversed() {
-            let REG_MOSAIC = UnsafeMutablePointer<UInt16>(bitPattern: 0x0400004C)!
-            REG_MOSAIC.pointee = UInt16((i << 12) | (i << 8))
+            REG_MOSAIC.store(UInt16((i << 12) | (i << 8)))
             
             waitForVsync()
             waitForVsync()
@@ -87,8 +86,7 @@ struct GameMain {
         let BG2_ENABLE = UInt16(1 << 10)
         setMode(3, flags: OBJ_ENABLE | BG2_ENABLE)
         
-        let REG_BG2CNT = UnsafeMutablePointer<UInt16>(bitPattern: 0x0400000C)!
-        REG_BG2CNT.pointee = 0x0001 // Piority: 1
+        REG_BG2CNT.store(0x0001) // Piority: 1
         
         while true {
             sprites = .init(repeating: .init(x: 240, y: 160, charNo: 0, paletteNo: 0), count: 8)

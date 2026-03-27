@@ -6,6 +6,7 @@
       "-Xfrontend", "-internalize-at-link",
       "-Xfrontend", "-disable-stack-protector",
       "-Xfrontend", "-disable-objc-interop",
+      "-Xclang-linker", "-nostdlib",
       "-Xclang-linker", "-fuse-ld=lld"
     ]
   },
@@ -21,6 +22,7 @@
   },
   "linker": {
     "extraCLIOptions": [
+      "-lc",
       "-lcrt0-gba",
       "-T", "gba_cart.ld"
     ]

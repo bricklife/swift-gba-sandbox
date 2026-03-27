@@ -1,3 +1,5 @@
+import _Volatile
+
 // https://github.com/devkitPro/libgba/blob/master/include/gba_video.h
 let REG_DISPCNT  = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000000)
 let MODE_3 = UInt16(3)
@@ -28,7 +30,7 @@ let REG_IF       = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000202)
 let IRQ_DMA3 = UInt16(1 << 11)
 let IRQ_KEYPAD = UInt16(1 << 12)
 
-@_section(".iwram")
+@section(".iwram")
 func irqHandler() {
     REG_IME.store(0)
     

@@ -1,3 +1,5 @@
+import _Volatile
+
 // https://github.com/devkitPro/libgba/blob/master/include/gba_video.h
 let REG_DISPCNT  = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000000)
 let REG_DISPSTAT = VolatileMappedRegister<UInt16>(unsafeBitPattern: 0x04000004)
@@ -25,7 +27,7 @@ var isStarted = false
 var count = 0
 var color = UInt16(0)
 
-@_section(".iwram")
+@section(".iwram")
 func irqHandler() {
     REG_IME.store(0)
     
