@@ -19,7 +19,7 @@ SWIFT_BUILD_ARGS := \
 	--configuration release \
 	--triple $(TARGET) \
 	--toolset $(TOOLSET) \
-	$(addprefix -Xswiftc , $(addprefix -Xclang-linker ,--sysroot $(SYSROOT)))
+	$(addprefix -Xswiftc , $(addprefix -Xclang-linker , --sysroot $(SYSROOT)))
 BUILDROOT        := $(shell $(SWIFT_BUILD) $(SWIFT_BUILD_ARGS) --show-bin-path)
 
 .PHONY: build
