@@ -1,4 +1,4 @@
-@_cdecl("putchar")
+@c
 public func putchar(_ c: CInt) -> CInt {
     mGBA.enableLog()
     if c == 0x0A {

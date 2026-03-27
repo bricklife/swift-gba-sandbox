@@ -1,4 +1,4 @@
-@_cdecl("getentropy")
+@c
 func getentropy(
     _ ptr: UnsafeMutablePointer<UInt8>,
     _ size: Int
