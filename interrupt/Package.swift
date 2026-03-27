@@ -17,8 +17,7 @@ let package = Package(
             name: "swift-gba",
             dependencies: [],
             swiftSettings: [
-                .enableExperimentalFeature("Embedded"),
-                .enableExperimentalFeature("Volatile"),
+                .enableExperimentalFeature("Embedded")
             ]
         )
     ]

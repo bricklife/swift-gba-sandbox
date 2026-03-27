@@ -17,8 +17,7 @@ let package = Package(
                 "Support",
             ],
             swiftSettings: [
-                .enableExperimentalFeature("Embedded"),
-                .enableExperimentalFeature("Volatile"),
+                .enableExperimentalFeature("Embedded")
             ]
         ),
         .target(name: "Support"),
