@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "swiftCompiler": {
+    "extraCLIOptions": [
+      "-enable-experimental-feature", "Embedded",
+      "-Xfrontend", "-internalize-at-link",
+      "-Xfrontend", "-disable-stack-protector",
+      "-Xfrontend", "-disable-objc-interop",
+      "-Xclang-linker", "-nostdlib",
+      "-Xclang-linker", "-fuse-ld=lld"
+    ]
+  },
+  "cCompiler": {
+    "extraCLIOptions": [
+      "-mthumb",
+      "-mfpu=none",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-D_LIBCPP_AVAILABILITY_HAS_NO_VERBOSE_ABORT",
+      "-fshort-enums"
+    ]
+  },
+  "linker": {
+    "extraCLIOptions": [
+      "-lc",
+      "-lcrt0-gba",
+      "-T", "gba_cart.ld"
+    ]
+  }
+}
