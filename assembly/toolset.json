@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "1.0",
+  "swiftCompiler": {
+    "extraCLIOptions": [
+      "-enable-experimental-feature", "Embedded",
+      "-Xclang-linker", "-nostdlib",
+      "-Xclang-linker", "-fuse-ld=lld"
+    ]
+  },
+  "cCompiler": {
+    "extraCLIOptions": [
+      "-marm"
+    ]
+  },
+  "linker": {
+    "extraCLIOptions": [
+      "--orphan-handling=warn",
+      "-Map", "map.txt"
+    ]
+  }
+}
